@@ -2,7 +2,8 @@
 
 A *toy* Boolean SAT *(B-SAT)* solver written in Rust.
 
-> [!NOTE] Definition
+> [!NOTE]
+>
 > A SAT solver takes a Boolean expression and finds out if the variables can be replaced by true or false so that the formula evaluates to true.
 > There are no known algorithms that can efficiently and correctly solve all possible input instances.
 > It is unknown how long it will take to find a solution, but many problems will be solved in a short time.
