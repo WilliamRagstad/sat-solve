@@ -1,4 +1,8 @@
-use crate::solver::{Formula, Variable};
+use crate::types::{Formula, Variable};
+
+const AND: &str = "and";
+const OR: &str = "or";
+const LIT: &str = "x";
 
 /// Parse a string into a formula.
 ///
@@ -16,10 +20,11 @@ use crate::solver::{Formula, Variable};
 /// ```
 pub fn parse(input: &str) -> Option<Formula> {
     let mut formula = Formula::new();
-    for clause in input.split("AND") {
+    let input = input.to_lowercase();
+    for clause in input.split(AND) {
         let mut variables = Vec::new();
         let clause = clause.trim().trim_start_matches('(').trim_end_matches(')');
-        for variable in clause.split("OR") {
+        for variable in clause.split(OR) {
             let variable = variable.trim();
             if variable.starts_with('-') {
                 variables.push(Variable::Negative(parse_literal(
@@ -39,7 +44,7 @@ fn parse_literal(literal: &str) -> Option<u32> {
         eprintln!("Missing variable!");
         return None;
     }
-    if let Some(num) = literal.trim().strip_prefix("x") {
+    if let Some(num) = literal.trim().strip_prefix(LIT) {
         if let Ok(num) = num.parse() {
             Some(num)
         } else {
