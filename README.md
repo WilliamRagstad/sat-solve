@@ -1,5 +1,7 @@
 # SAT-Solve
 
+[![Build](https://github.com/WilliamRagstad/sat-solve/actions/workflows/rust.yml/badge.svg)](https://github.com/WilliamRagstad/sat-solve/actions/workflows/rust.yml)
+
 A *toy* Boolean SAT *(B-SAT)* solver written in Rust.
 
 > [!NOTE]
