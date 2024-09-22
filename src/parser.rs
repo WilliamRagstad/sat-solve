@@ -1,3 +1,5 @@
+use regex::Regex;
+
 use crate::types::{Clause, Formula, Variable};
 
 /// Parse a string into a formula.
@@ -16,15 +18,20 @@ use crate::types::{Clause, Formula, Variable};
 /// ```
 pub fn parse(input: &str) -> Option<Formula> {
     let mut formula = Formula::new();
-    let input = input.to_lowercase();
-    for clause in input.split("and") {
+    let and = Regex::new(r"and|&").unwrap();
+    let or = Regex::new(r"or|\|").unwrap();
+    for clause in and.split(&input.to_lowercase()) {
         let mut variables = Vec::new();
         let clause = clause.trim().trim_start_matches('(').trim_end_matches(')');
-        for variable in clause.split("or") {
+        for variable in or.split(clause) {
             let variable = variable.trim();
             if variable.starts_with('-') {
                 variables.push(Variable::Negative(parse_literal(
                     variable.trim_start_matches("-"),
+                )?));
+            } else if variable.starts_with('!') {
+                variables.push(Variable::Negative(parse_literal(
+                    variable.trim_start_matches("!"),
                 )?));
             } else {
                 variables.push(Variable::Positive(parse_literal(variable)?));
