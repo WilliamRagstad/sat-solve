@@ -1,7 +1,7 @@
 use crate::types::{Formula, Literal, Solution};
 
 mod dfs;
-pub use dfs::DFS;
+pub use dfs::Dfs;
 
 /// A SAT solver is a program that determines whether a given boolean formula is satisfiable.
 /// - If the formula is satisfiable, the solver returns `Some(solution)`.

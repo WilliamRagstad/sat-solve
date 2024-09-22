@@ -1,4 +1,4 @@
-use crate::types::{Formula, Variable};
+use crate::types::{Clause, Formula, Variable};
 
 /// Parse a string into a formula.
 ///
@@ -30,7 +30,7 @@ pub fn parse(input: &str) -> Option<Formula> {
                 variables.push(Variable::Positive(parse_literal(variable)?));
             }
         }
-        formula.push(variables);
+        formula.add(Clause(variables));
     }
     Some(formula)
 }
@@ -60,11 +60,12 @@ mod tests {
     #[test]
     fn test_parse() {
         let input = "(x1 OR x2) AND (-x2 OR x3) AND (x1 OR -x3)";
-        let expected = vec![
+        let expected: Formula = vec![
             vec![Variable::Positive(1), Variable::Positive(2)],
             vec![Variable::Negative(2), Variable::Positive(3)],
             vec![Variable::Positive(1), Variable::Negative(3)],
-        ];
+        ]
+        .into();
         assert_eq!(parse(input), Some(expected));
     }
 

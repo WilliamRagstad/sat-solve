@@ -1,34 +1,30 @@
-use crate::{
-    types::{Formula, Literal, Solution},
-    utils::satisfy_formula,
-};
+use crate::types::{Formula, Literal, Solution};
 
 use super::Solver;
 
-pub fn brute_force(formula: &Formula, variables: &[Literal], solution: &mut Solution) -> bool {
-    if variables.is_empty() {
-        return satisfy_formula(formula, solution);
+pub fn brute_force(formula: &Formula, literals: &[Literal], solution: &mut Solution) -> bool {
+    if literals.is_empty() {
+        return solution.satisfy(formula);
     }
-    let variable = variables[0];
-    let mut remaining_variables = Vec::from(variables);
+    let lit = literals[0];
+    let mut remaining_variables = Vec::from(literals);
     remaining_variables.remove(0);
-    solution.insert(variable, false);
+    solution.set(lit, false);
     if brute_force(formula, &remaining_variables, solution) {
         return true;
     }
-    solution.insert(variable, true);
+    solution.set(lit, true);
     if brute_force(formula, &remaining_variables, solution) {
         return true;
     }
-    solution.remove(&variable);
     false
 }
 
 /// A depth-first search (DFS) solver for the SAT problem. \
 /// The solver uses brute force to find a solution.
-pub struct DFS;
+pub struct Dfs;
 
-impl Solver for DFS {
+impl Solver for Dfs {
     fn solve(
         &self,
         formula: &mut Formula,

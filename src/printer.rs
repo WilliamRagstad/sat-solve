@@ -95,7 +95,7 @@ impl PrintStyle {
         stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
         print!("(");
         for (i, variable) in clause.iter().enumerate() {
-            self.print_variable(variable);
+            self.print_variable(&variable);
             if i < clause.len() - 1 {
                 stdout.execute(SetForegroundColor(Color::Yellow)).unwrap();
                 print!(" {} ", self.or_style());
@@ -121,20 +121,22 @@ impl PrintStyle {
 
     pub fn print_solution(&self, solution: &Solution) {
         let mut stdout = std::io::stdout();
-        let mut variables = solution.keys().collect::<Vec<_>>();
-        variables.sort();
-        for i in 0..variables.len() {
-            let id = variables[i];
-            let value = solution.get(id).unwrap();
+        let literals = solution.literals();
+        for i in 0..literals.len() {
+            let id = literals[i];
             stdout
-                .execute(SetForegroundColor(if *value {
+                .execute(SetForegroundColor(if solution.get(id) {
                     Color::Green
                 } else {
                     Color::Red
                 }))
                 .unwrap();
-            print!("x{} = {}", self.lit_style(*id), self.bool_style(*value));
-            if i < variables.len() - 1 {
+            print!(
+                "x{} = {}",
+                self.lit_style(id),
+                self.bool_style(solution.get(id))
+            );
+            if i < literals.len() - 1 {
                 stdout.execute(SetForegroundColor(Color::Yellow)).unwrap();
                 print!(", ");
             }
@@ -172,10 +174,11 @@ mod tests {
 
     #[test]
     fn test_print_formula() {
-        let formula = vec![
+        let formula: Formula = vec![
             vec![Variable::Positive(1), Variable::Negative(2)],
             vec![Variable::Positive(3)],
-        ];
+        ]
+        .into();
         print!("Formula: ");
         PrintStyle::Normal.print_formula(&formula);
         PrintStyle::Programmatic.print_formula(&formula);
@@ -184,7 +187,7 @@ mod tests {
 
     #[test]
     fn test_print_solution() {
-        let solution = Solution::from([(1, true), (2, false), (3, true)]);
+        let solution = [(1, true), (2, false), (3, true)][..].into();
         print!("Solution: ");
         PrintStyle::Normal.print_solution(&solution);
         PrintStyle::Programmatic.print_solution(&solution);

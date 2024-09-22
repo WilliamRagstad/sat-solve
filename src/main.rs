@@ -10,33 +10,64 @@ mod printer;
 mod solver;
 mod solvers;
 mod types;
-mod utils;
 
 fn main() {
     println!("Welcome to the SAT Solver!");
     let mut cursor = cursor();
-    let solver = solvers::DFS;
+    let mut solver = solvers::Dfs;
+    let mut style = PrintStyle::Normal;
     loop {
         let input = read_line(&mut cursor);
-        let Some(formula) = parser::parse(&input) else {
-            continue;
-        };
-        update_line(&input, &formula, &mut cursor);
-        let solutions = solver::solve_all(&formula, &solver);
-        if !solutions.is_empty() {
-            if solutions.len() == 1 {
-                print!("Satisfiable: ");
-            } else {
-                println!("Satisfiable ({} solutions): ", solutions.len());
+        match input.trim() {
+            "" => (),
+            "exit" => break,
+            "math" => {
+                style = PrintStyle::Mathematical;
+                println!("OK");
             }
-            for solution in &solutions {
-                if solutions.len() > 1 {
-                    print!("  ");
+            "normal" => {
+                style = PrintStyle::Normal;
+                println!("OK");
+            }
+            "prog" => {
+                style = PrintStyle::Programmatic;
+                println!("OK");
+            }
+            "dfs" => {
+                solver = solvers::Dfs;
+                println!("OK");
+            }
+            "help" => {
+                println!("Commands:");
+                println!("  dfs: Use depth-first search (DFS) brute-force solver");
+                println!("  math: Use mathematical notation");
+                println!("  normal: Use normal notation");
+                println!("  prog: Use programmatic notation");
+                println!("  help: Display this help message");
+                println!("  exit: Exit the program");
+            }
+            expr => {
+                let Some(formula) = parser::parse(expr) else {
+                    continue;
+                };
+                update_line(&input, &formula, &mut cursor, &style);
+                let solutions = solver::solve_all(&formula, &solver);
+                if !solutions.is_empty() {
+                    if solutions.len() == 1 {
+                        print!("Satisfiable: ");
+                    } else {
+                        println!("Satisfiable ({} solutions): ", solutions.len());
+                    }
+                    for solution in &solutions {
+                        if solutions.len() > 1 {
+                            print!("  ");
+                        }
+                        style.print_solution(solution);
+                    }
+                } else {
+                    println!("Unsatisfiable");
                 }
-                PrintStyle::Programmatic.print_solution(solution);
             }
-        } else {
-            println!("Unsatisfiable");
         }
     }
 }
@@ -53,7 +84,7 @@ fn read_line(cursor: &mut TerminalCursor) -> String {
     input
 }
 
-fn update_line(input: &str, formula: &Formula, cursor: &mut TerminalCursor) {
+fn update_line(input: &str, formula: &Formula, cursor: &mut TerminalCursor, style: &PrintStyle) {
     if let Err(err) = cursor.restore_position() {
         eprintln!("Failed to restore cursor position: {}", err);
         return; // Skip the rest of the function
@@ -61,5 +92,5 @@ fn update_line(input: &str, formula: &Formula, cursor: &mut TerminalCursor) {
     // Clear the current line with length of the input
     print!("{}", " ".repeat(input.len()));
     cursor.restore_position().unwrap();
-    PrintStyle::Programmatic.print_formula(formula);
+    style.print_formula(formula);
 }
