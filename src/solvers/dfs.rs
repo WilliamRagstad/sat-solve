@@ -7,14 +7,14 @@ pub fn brute_force(formula: &Formula, literals: &[Literal], solution: &mut Solut
         return solution.satisfy(formula);
     }
     let lit = literals[0];
-    let mut remaining_variables = Vec::from(literals);
-    remaining_variables.remove(0);
+    // First, set the literal to false
     solution.set(lit, false);
-    if brute_force(formula, &remaining_variables, solution) {
+    if brute_force(formula, &literals[1..], solution) {
         return true;
     }
+    // Then, set the literal to true
     solution.set(lit, true);
-    if brute_force(formula, &remaining_variables, solution) {
+    if brute_force(formula, &literals[1..], solution) {
         return true;
     }
     false
