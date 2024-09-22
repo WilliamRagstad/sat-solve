@@ -1,5 +1,8 @@
 use crate::types::{Clause, Formula, Literal, Solution, Variable};
-use crossterm::{style::Color, style::SetForegroundColor, ExecutableCommand};
+use crossterm::{
+    style::{Attribute, Color, SetAttribute, SetForegroundColor},
+    ExecutableCommand,
+};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum PrintStyle {
@@ -46,12 +49,16 @@ impl PrintStyle {
 
     fn lit_style(&self, id: Literal) -> String {
         match self {
-            PrintStyle::Mathematical => id
-                .to_string()
-                .chars()
-                .map(|c| char::from_u32('₀' as u32 + c.to_digit(10).unwrap()).unwrap())
-                .collect::<String>(),
-            _ => id.to_string(),
+            PrintStyle::Mathematical => {
+                format!(
+                    "𝑋{}",
+                    id.to_string()
+                        .chars()
+                        .map(|c| char::from_u32('₀' as u32 + c.to_digit(10).unwrap()).unwrap())
+                        .collect::<String>()
+                )
+            }
+            _ => format!("X{}", id),
         }
     }
 
@@ -86,13 +93,13 @@ impl PrintStyle {
         if !positive {
             print!("{}", self.neg_sign());
         }
-        print!("x{}", self.lit_style(*id));
+        print!("{}", self.lit_style(*id));
         stdout.execute(SetForegroundColor(Color::Reset)).unwrap();
     }
 
     pub fn print_clause(&self, clause: &Clause) {
         let mut stdout = std::io::stdout();
-        stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
+        stdout.execute(SetForegroundColor(Color::DarkGrey)).unwrap();
         print!("(");
         for (i, variable) in clause.iter().enumerate() {
             self.print_variable(variable);
@@ -101,7 +108,7 @@ impl PrintStyle {
                 print!(" {} ", self.or_style());
             }
         }
-        stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
+        stdout.execute(SetForegroundColor(Color::DarkGrey)).unwrap();
         print!(")");
         stdout.execute(SetForegroundColor(Color::Reset)).unwrap();
     }
@@ -124,6 +131,12 @@ impl PrintStyle {
         let literals = solution.literals();
         for i in 0..literals.len() {
             let id = literals[i];
+            stdout.execute(SetForegroundColor(Color::Reset)).unwrap();
+            stdout.execute(SetAttribute(Attribute::Bold)).unwrap();
+            print!("{}", self.lit_style(id));
+            stdout.execute(SetAttribute(Attribute::Reset)).unwrap();
+            stdout.execute(SetForegroundColor(Color::DarkGrey)).unwrap();
+            print!(" = ");
             stdout
                 .execute(SetForegroundColor(if solution.get(id) {
                     Color::Green
@@ -131,13 +144,9 @@ impl PrintStyle {
                     Color::Red
                 }))
                 .unwrap();
-            print!(
-                "x{} = {}",
-                self.lit_style(id),
-                self.bool_style(solution.get(id))
-            );
+            print!("{}", self.bool_style(solution.get(id)));
             if i < literals.len() - 1 {
-                stdout.execute(SetForegroundColor(Color::Yellow)).unwrap();
+                stdout.execute(SetForegroundColor(Color::DarkGrey)).unwrap();
                 print!(", ");
             }
         }
@@ -152,15 +161,15 @@ mod tests {
 
     #[test]
     fn test_lit_style() {
-        assert_eq!(PrintStyle::Normal.lit_style(1), "1");
-        assert_eq!(PrintStyle::Programmatic.lit_style(1), "1");
-        assert_eq!(PrintStyle::Mathematical.lit_style(1), "₁");
-        assert_eq!(PrintStyle::Normal.lit_style(10), "10");
-        assert_eq!(PrintStyle::Programmatic.lit_style(10), "10");
-        assert_eq!(PrintStyle::Mathematical.lit_style(10), "₁₀");
-        assert_eq!(PrintStyle::Normal.lit_style(100), "100");
-        assert_eq!(PrintStyle::Programmatic.lit_style(100), "100");
-        assert_eq!(PrintStyle::Mathematical.lit_style(100), "₁₀₀");
+        assert_eq!(PrintStyle::Normal.lit_style(1), "X1");
+        assert_eq!(PrintStyle::Programmatic.lit_style(1), "X1");
+        assert_eq!(PrintStyle::Mathematical.lit_style(1), "𝑋₁");
+        assert_eq!(PrintStyle::Normal.lit_style(10), "X10");
+        assert_eq!(PrintStyle::Programmatic.lit_style(10), "X10");
+        assert_eq!(PrintStyle::Mathematical.lit_style(10), "𝑋₁₀");
+        assert_eq!(PrintStyle::Normal.lit_style(100), "X100");
+        assert_eq!(PrintStyle::Programmatic.lit_style(100), "X100");
+        assert_eq!(PrintStyle::Mathematical.lit_style(100), "𝑋₁₀₀");
     }
 
     #[test]
