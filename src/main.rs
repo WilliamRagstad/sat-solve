@@ -5,15 +5,7 @@ use crossterm::{
     ExecutableCommand,
 };
 use crossterm_cursor::{cursor, TerminalCursor};
-use types::Formula;
-
-use crate::printer::PrintStyle;
-
-mod parser;
-mod printer;
-mod solver;
-mod solvers;
-mod types;
+use sat_lib::{parser, printer::PrintStyle, solver, solvers, types::Formula};
 
 fn main() {
     println!("Welcome to the SAT Solver!");
