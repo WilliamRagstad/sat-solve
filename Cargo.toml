@@ -1,6 +1,7 @@
 [package]
 name = "sat-solve"
 description = "A Boolean satisfiability problem (SAT) solver"
+authors = ["William Rågstad"]
 version = "0.1.0"
 edition = "2021"
 
