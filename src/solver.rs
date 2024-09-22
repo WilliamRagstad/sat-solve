@@ -45,10 +45,7 @@ fn remove_solution(formula: &mut Formula, solution: &Solution) {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        solvers,
-        utils::{print_formula, print_solution, satisfy_formula},
-    };
+    use crate::{printer::PrintStyle, solvers, utils::satisfy_formula};
 
     use super::*;
 
@@ -64,7 +61,7 @@ mod tests {
             vec![Variable::Positive(3)],
         ];
         print!("Formula: ");
-        print_formula(&formula);
+        PrintStyle::Normal.print_formula(&formula);
         // There are multiple possible solutions:
         // - x1 = true, x2 = false, x3 = true
         // - x1 = true, x2 = true, x3 = true
@@ -88,7 +85,7 @@ mod tests {
             println!("Solutions:");
             for solution in &solutions {
                 assert!(possible_solutions.contains(solution));
-                print_solution(solution);
+                PrintStyle::Normal.print_solution(solution);
             }
         }
     }
@@ -98,7 +95,7 @@ mod tests {
         // (x1 OR x2) AND (-x1 OR -x2)
         let formula = vec![vec![Variable::Positive(1)], vec![Variable::Negative(1)]];
         print!("Formula: ");
-        print_formula(&formula);
+        PrintStyle::Normal.print_formula(&formula);
         for solver in solvers() {
             // There is no solution that satisfies the formula
             let solutions = solve_all(&formula, &solver);
@@ -116,7 +113,7 @@ mod tests {
             vec![Variable::Negative(1), Variable::Positive(2)],
         ];
         print!("Formula: ");
-        print_formula(&formula);
+        PrintStyle::Normal.print_formula(&formula);
         // There is only one possible solution:
         // - x1 = true, x2 = true
         let possible_solutions = [Solution::from([(1, true), (2, true)])];
@@ -132,7 +129,7 @@ mod tests {
             println!("Solutions:");
             for solution in &solutions {
                 assert!(possible_solutions.contains(solution));
-                print_solution(solution);
+                PrintStyle::Normal.print_solution(solution);
             }
         }
     }
@@ -145,7 +142,7 @@ mod tests {
             vec![Variable::Positive(3)],
         ];
         print!("Formula: ");
-        print_formula(&formula);
+        PrintStyle::Normal.print_formula(&formula);
         // There are multiple possible solutions:
         // - x1 = true, x2 = false, x3 = true
         // - x1 = true, x2 = true, x3 = true
@@ -164,7 +161,7 @@ mod tests {
             println!("Solutions:");
             for solution in &solutions {
                 assert!(possible_solutions.contains(solution));
-                print_solution(solution);
+                PrintStyle::Normal.print_solution(solution);
             }
         }
     }

@@ -1,9 +1,5 @@
 use crate::types::{Formula, Variable};
 
-const AND: &str = "and";
-const OR: &str = "or";
-const LIT: &str = "x";
-
 /// Parse a string into a formula.
 ///
 /// ## Examples
@@ -21,10 +17,10 @@ const LIT: &str = "x";
 pub fn parse(input: &str) -> Option<Formula> {
     let mut formula = Formula::new();
     let input = input.to_lowercase();
-    for clause in input.split(AND) {
+    for clause in input.split("and") {
         let mut variables = Vec::new();
         let clause = clause.trim().trim_start_matches('(').trim_end_matches(')');
-        for variable in clause.split(OR) {
+        for variable in clause.split("or") {
             let variable = variable.trim();
             if variable.starts_with('-') {
                 variables.push(Variable::Negative(parse_literal(
@@ -44,7 +40,7 @@ fn parse_literal(literal: &str) -> Option<u32> {
         eprintln!("Missing variable!");
         return None;
     }
-    if let Some(num) = literal.trim().strip_prefix(LIT) {
+    if let Some(num) = literal.trim().strip_prefix("x") {
         if let Ok(num) = num.parse() {
             Some(num)
         } else {
