@@ -95,7 +95,7 @@ impl PrintStyle {
         stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
         print!("(");
         for (i, variable) in clause.iter().enumerate() {
-            self.print_variable(&variable);
+            self.print_variable(variable);
             if i < clause.len() - 1 {
                 stdout.execute(SetForegroundColor(Color::Yellow)).unwrap();
                 print!(" {} ", self.or_style());
