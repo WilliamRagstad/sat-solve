@@ -21,20 +21,55 @@ There are multiple experimental implementations of SAT solvers in this project t
 - **MiniSAT**: MiniSAT algorithm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(not planned yet)*
 - **Z3**: The algorithm used in the Z3 solver &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(not planned yet)*
 
-## Example
+## Usage
 
-Start the interactive shell with `cargo run` and enter formulas to solve.
+The SAT solver is built as an interactive shell parsing formulas using the following syntax:
+
+- **Variables**: `x1`, `x2`, `x3`, ...
+- **Negation**: `-x1`, `!x2`
+- **Conjunction**: `x1 AND x2`, `x1 & x2`
+- **Disjunction**: `x1 OR x2`, `x1 | x2`
+- **Grouping**: `(x1 OR x2) AND x3`, `x1 OR (x2 AND x3)`
+
+The shell can be started with `cargo run` and exited with the `exit` command.
+
+### Examples
 
 ```pl
-> x2 OR x4 AND x1 OR x2 AND -x2
-Formula: (x2 OR x4) AND (x1 OR x2) AND (-x2)
+Welcome to the SAT Solver!
+
+> (x2 or x4) and (x1 or x2) and (-x2)
 Satisfiable: x1 = T, x2 = F, x4 = T
 
-> x2 OR x4 AND x1 OR x2
-Formula: (x2 OR x4) AND (x1 OR x2)
-Satisfiable (2 solutions):
-  x1 = F, x2 = T, x4 = F
-  x1 = T, x2 = F, x4 = T
+> (-x1 or x1) and (x2 or -x2)
+Satisfiable (4 solutions):
+  x1 = F, x2 = F
+  x1 = F, x2 = T
+  x1 = T, x2 = F
+  x1 = T, x2 = T
+
+> math
+OK
+
+> (¬x₁ ∨ x₁) ∧ (x₂ ∨ ¬x₂)
+Satisfiable (4 solutions):
+  x₁ = ⊥, x₂ = ⊥
+  x₁ = ⊥, x₂ = ⊤
+  x₁ = ⊤, x₂ = ⊥
+  x₁ = ⊤, x₂ = ⊤
+
+> prog
+OK
+
+> -x1 or x1 and x2 or -x2
+  (!x1 | x1) & (x2 | !x2)
+Satisfiable (4 solutions):
+  x1 = 0, x2 = 0
+  x1 = 0, x2 = 1
+  x1 = 1, x2 = 0
+  x1 = 1, x2 = 1
+
+> exit
 ```
 
 ## References
