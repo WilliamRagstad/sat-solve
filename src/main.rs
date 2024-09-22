@@ -39,12 +39,12 @@ fn main() {
             }
             "help" => {
                 println!("Commands:");
-                println!("  dfs: Use depth-first search (DFS) brute-force solver");
-                println!("  math: Use mathematical notation");
-                println!("  normal: Use normal notation");
-                println!("  prog: Use programmatic notation");
-                println!("  help: Display this help message");
-                println!("  exit: Exit the program");
+                println!("  dfs      Use depth-first search (DFS) brute-force solver (default)");
+                println!("  math     Use mathematical notation");
+                println!("  normal   Use normal notation");
+                println!("  prog     Use programmatic notation");
+                println!("  help     Display this help message");
+                println!("  exit     Exit the program");
             }
             expr => {
                 let Some(formula) = parser::parse(expr) else {
