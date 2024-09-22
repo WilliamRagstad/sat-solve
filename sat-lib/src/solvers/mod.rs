@@ -1,4 +1,4 @@
-use crate::types::{Formula, Literal, Solution};
+use crate::types::{Certificate, Formula, Literal, Solution};
 
 mod dfs;
 pub use dfs::Dfs;
@@ -12,5 +12,5 @@ pub trait Solver {
         formula: &mut Formula,
         variables: &[Literal],
         solution: &mut Solution,
-    ) -> Option<Solution>;
+    ) -> Certificate;
 }

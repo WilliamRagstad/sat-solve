@@ -187,6 +187,13 @@ impl From<&[(Literal, bool)]> for Solution {
     }
 }
 
+/// A certificate is a proof that a formula is satisfiable or unsatisfiable.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum Certificate {
+    Unsatisfiable,
+    Satisfiable(Solution),
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

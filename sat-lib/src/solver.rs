@@ -1,6 +1,6 @@
 use crate::{
     solvers::Solver,
-    types::{Formula, Solution},
+    types::{Certificate, Formula, Solution},
 };
 
 /// Find all solutions to a SAT problem using a given solver.
@@ -14,7 +14,7 @@ pub fn solve_all<S: Solver>(formula: &Formula, solver: &S) -> Vec<Solution> {
     let variables = formula.literals();
     let mut solution = Solution::new();
 
-    while let Some(solution) = {
+    while let Certificate::Satisfiable(solution) = {
         solution.reset();
         solver.solve(&mut formula, &variables, &mut solution)
     } {

@@ -1,4 +1,4 @@
-use crate::types::{Formula, Literal, Solution};
+use crate::types::{Certificate, Formula, Literal, Solution};
 
 use super::Solver;
 
@@ -30,11 +30,11 @@ impl Solver for Dfs {
         formula: &mut Formula,
         variables: &[Literal],
         solution: &mut Solution,
-    ) -> Option<Solution> {
+    ) -> Certificate {
         if brute_force(formula, variables, solution) {
-            Some(solution.clone())
+            Certificate::Satisfiable(solution.clone())
         } else {
-            None
+            Certificate::Unsatisfiable
         }
     }
 }
