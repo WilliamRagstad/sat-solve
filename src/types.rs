@@ -202,11 +202,13 @@ mod tests {
 
     #[test]
     fn test_solution_satisfy() {
-        let formula = Formula(vec![
-            Clause(vec![Variable::Positive(1), Variable::Negative(2)]),
-            Clause(vec![Variable::Positive(2), Variable::Negative(3)]),
-        ]);
-        let solution: Solution = ([(1u32, true), (2u32, false), (3u32, true)][..]).into();
+        // (x1 OR -x2) AND (x2 OR -x3)
+        let formula = vec![
+            vec![Variable::Positive(1), Variable::Negative(2)],
+            vec![Variable::Positive(2), Variable::Negative(3)],
+        ]
+        .into();
+        let solution: Solution = ([(1, true), (2, false), (3, false)][..]).into();
         assert!(solution.satisfy(&formula));
     }
 }
