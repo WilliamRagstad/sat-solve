@@ -88,6 +88,13 @@ Satisfiable (4 solutions):
   - [Chaff Algorithm](https://en.wikipedia.org/wiki/Chaff_(SAT_solver))
   - [MiniSAT Algorithm](https://en.wikipedia.org/wiki/MiniSAT)
   - [Z3 Theorem Prover](https://en.wikipedia.org/wiki/Z3_Theorem_Prover)
+  - Related Topics
+	- [Satisfiability Modulo Theories](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories)
+	- [Quantified Boolean Formula](https://en.wikipedia.org/wiki/Quantified_boolean_formula)
+	- [P vs NP Problem](https://en.wikipedia.org/wiki/P_versus_NP_problem)
+	- [Boolean satisfiability problem](https://en.wikipedia.org/wiki/Boolean_satisfiability_problem)
+	- [Conjunctive Normal Form](https://en.wikipedia.org/wiki/Conjunctive_normal_form)
+	- [Unit propagation](https://en.wikipedia.org/wiki/Unit_propagation)
 - Talks
   - [Constraint Satisfaction: Introduction](https://www.youtube.com/watch?v=_e64FiDWvqs)
   - [A Peek Inside SAT Solvers](https://www.youtube.com/watch?v=d76e4hV1iJY)
