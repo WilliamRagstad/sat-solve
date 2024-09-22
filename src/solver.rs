@@ -16,7 +16,7 @@ pub fn solve_all<S: Solver>(formula: &Formula, solver: &S) -> Vec<Solution> {
             solution.insert(*variable, false);
         }
         // Find a solution using the solver
-        solver.solve(&formula, &variables, &mut solution)
+        solver.solve(&mut formula, &variables, &mut solution)
     } {
         // Add the solution to the list of solutions
         solutions.push(solution.clone());

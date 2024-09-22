@@ -9,7 +9,7 @@ pub use dfs::DFS;
 pub trait Solver {
     fn solve(
         &self,
-        formula: &Formula,
+        formula: &mut Formula,
         variables: &[Literal],
         solution: &mut Solution,
     ) -> Option<Solution>;

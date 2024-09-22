@@ -31,7 +31,7 @@ pub struct DFS;
 impl Solver for DFS {
     fn solve(
         &self,
-        formula: &Formula,
+        formula: &mut Formula,
         variables: &[Literal],
         solution: &mut Solution,
     ) -> Option<Solution> {
