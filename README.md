@@ -12,7 +12,7 @@ A *toy* Boolean SAT *(B-SAT)* solver written in Rust.
 
 There are multiple experimental implementations of SAT solvers in this project that uses different algorithms and methods:
 
-- **DFS**: Depth-first search brute-force algorithm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(not recommended)*
+- **DFS**: Depth-first search brute-force algorithm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(not recommended)*
 - **DPPL**: Unit propagation algorithm (DPLL) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(under development)*
 - **CDCL**: Conflict-Driven Clause Learning algorithm &nbsp;*(planned)*
 - **WalkSAT**: WalkSAT algorithm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *(not planned yet)*
