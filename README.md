@@ -110,3 +110,9 @@ Satisfiable (4 solutions):
   - [Lecture Notes on SAT Solvers & DPLL](https://www.cs.cmu.edu/~15414/f17/lectures/10-dpll.pdf)
   - [Lecture Notes on Solving SAT with DPLL](https://www.cs.cmu.edu/~15414/s22/lectures/14-sat-dpll.pdf)
   - [Learning to Select Branching Rules in the DPLL Procedure for Satisfiability](https://www.cs.ubc.ca/~hutter/earg/papers07/lagoudakis01learning.pdf)
+- Reference Projects
+  - [splr](https://crates.io/crates/splr)
+  - [Glucose 4.1](https://www.labri.fr/perso/lsimon/research/glucose/)
+  - [MiniSAT](http://minisat.se/)
+  - [CaDiCaL](https://github.com/arminbiere/cadical)
+  - [Z3](https://github.com/Z3Prover/z3)
