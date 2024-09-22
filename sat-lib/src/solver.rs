@@ -3,6 +3,11 @@ use crate::{
     types::{Formula, Solution},
 };
 
+/// Find all solutions to a SAT problem using a given solver.
+/// Uses an exhaustive search with restart backtracking.
+///
+/// ## Note
+/// This is a naive implementation that may not be efficient for large formulas with many variables and possible solutions.
 pub fn solve_all<S: Solver>(formula: &Formula, solver: &S) -> Vec<Solution> {
     let mut formula = formula.clone();
     let mut solutions = Vec::new();
